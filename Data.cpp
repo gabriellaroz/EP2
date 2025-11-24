@@ -54,7 +54,6 @@ bool Data::estaDentroDoPeriodo(Data* inicio, Data* fim, Data* d) {
     bool depoisdeiniciar;
     bool antesdofim;
 
-    // aqui d >= inicio
     if (d->getAno() > inicio->getAno()){
         depoisdeiniciar = true;
     } 
@@ -64,7 +63,7 @@ bool Data::estaDentroDoPeriodo(Data* inicio, Data* fim, Data* d) {
     else{
         depoisdeiniciar = false;
     }
-    // aqui d <= fim
+    
     if (d->getAno() < fim->getAno()){
         antesdofim = true;
     } 
