@@ -3,7 +3,6 @@
 
 #include "Usuario.h"
 #include <string>
-using namespace std;
 
 class Professor: public Usuario {
 public: 

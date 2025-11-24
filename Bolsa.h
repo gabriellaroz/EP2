@@ -1,15 +1,12 @@
 #ifndef BOLSA_H
 #define BOLSA_H
 
-#define BOLSA_USP 700.0
-
 class Data;
-
 class Bolsa {
 private:
     Data* inicio;
     Data* fim;
-    static double valorUSP; // valor padrao da bolsa USP
+    static double valorUSP; // valor da bolsa usp 
 
 public:
     Bolsa(Data* inicio, Data* fim);
@@ -22,7 +19,7 @@ public:
     virtual double getValor(Data* data) = 0;
     virtual void imprimir() = 0;
 
-    // mtodos estaticos!!
+    // metodos estaticos!!
     static double getValorUSP();
     static void setValorUSP(double valor);
 };

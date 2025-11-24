@@ -1,5 +1,6 @@
 #include "Data.h"
 #include <stdexcept>
+#include <string>
 using namespace std;
 
 Data::Data(int mes, int ano) : //construtor 1
@@ -26,7 +27,7 @@ Data::Data(Data* base, int meses){ //construtor 2
         mes -= 12;
         ano++;
     }
-    while (mes < 1){
+    while (mes < 1){ //checa negativos 
         mes += 12;
         ano--;
     }
@@ -63,7 +64,7 @@ bool Data::estaDentroDoPeriodo(Data* inicio, Data* fim, Data* d) {
     else{
         depoisdeiniciar = false;
     }
-    
+
     if (d->getAno() < fim->getAno()){
         antesdofim = true;
     } 
