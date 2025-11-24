@@ -12,6 +12,9 @@ public:
    virtual ~BolsaPeeg(); 
    string getDisciplina();
 
+   double getValor(Data* d);  
+    void imprimir();           
+
 private: 
 string disciplina;
 };

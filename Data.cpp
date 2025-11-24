@@ -27,10 +27,6 @@ Data::Data(Data* base, int meses){ //construtor 2
         mes -= 12;
         ano++;
     }
-    while (mes < 1){ //checa negativos 
-        mes += 12;
-        ano--;
-    }
     if (ano < 1900) {
     throw new invalid_argument("Ano resultante invalido");
 }
