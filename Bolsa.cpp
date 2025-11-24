@@ -13,20 +13,25 @@ Bolsa::Bolsa(Data* inicio, Data* fim)
     if (inicio == nullptr){
         throw new invalid_argument("Data de inicio nula.");
     }
-    if (fim == nullptr) {
+    if (fim == nullptr){
         throw new invalid_argument("Data de fim nula.");
     }
-    if (inicio->getAno() > fim->getAno() ||
-        (inicio->getAno() == fim->getAno() && inicio->getMes() > fim->getMes()))
-    {
+
+    int anoInicio = inicio->getAno();
+    int anoFim = fim->getAno();
+    int mesInicio = inicio->getMes();
+    int mesFim = fim->getMes();
+
+   
+    if (anoInicio > anoFim || (anoInicio == anoFim && mesInicio > mesFim)){
         throw new invalid_argument("Data de inicio posterior à data de fim.");
     }
 }
+
 Bolsa::~Bolsa() {
     delete inicio;
     delete fim;
 }
-
 
 Data* Bolsa::getInicio() {
     return inicio;
