@@ -21,37 +21,30 @@ double BolsaPeeg::getValor(Data* d) {
         throw new invalid_argument("mensagem");
     }
 
-    int anoD = d->getAno();
-    int mesD = d->getMes();
+    int ano = d->getAno();
+    int mes = d->getMes();
 
-    int anoInicio = getInicio()->getAno();
-    int mesInicio = getInicio()->getMes();
+    int anoIni = getInicio()->getAno();
+    int mesIni = getInicio()->getMes();
 
     int anoFim = getFim()->getAno();
     int mesFim = getFim()->getMes();
 
-    bool dataAntesDoInicio = (anoD < anoInicio) || (anoD == anoInicio && mesD < mesInicio);
+    bool antes = (ano < anoIni) || (ano == anoIni && mes < mesIni);
+    bool depois = (ano > anoFim) || (ano == anoFim && mes > mesFim);
 
-    bool dataDepoisDoFim = (anoD > anoFim) ||(anoD == anoFim && mesD > mesFim);
-
-
-    if (dataAntesDoInicio || dataDepoisDoFim){
+    if (antes || depois) {
         return 0;
     }
+
     return getValorUSP();
 }
 
 void BolsaPeeg::imprimir() {
-    int mesInicio = getInicio()->getMes();
-    int anoInicio = getInicio()->getAno();
-
-    int mesFim = getFim()->getMes();
-    int anoFim = getFim()->getAno();
-
     cout << "(PEEG) "
-         << mesInicio << "/" << anoInicio
+         << getInicio()->getMes() << "/" << getInicio()->getAno()
          << " a "
-         << mesFim << "/" << anoFim
+         << getFim()->getMes() << "/" << getFim()->getAno()
          << " - "
          << disciplina
          << endl;
