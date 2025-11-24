@@ -11,21 +11,27 @@ Bolsa::Bolsa(Data* inicio, Data* fim)
     : inicio(inicio), fim(fim)
 {
     if (inicio == nullptr){
-        throw new invalid_argument("Data de inicio nula.");
+        throw new invalid_argument("n sei oq por");
     }
     if (fim == nullptr){
-        throw new invalid_argument("Data de fim nula.");
+        throw new invalid_argument("n sei oq por");
     }
 
-    int anoInicio = inicio->getAno();
-    int anoFim = fim->getAno();
-    int mesInicio = inicio->getMes();
-    int mesFim = fim->getMes();
+    int inicioano = inicio->getAno();
+    int anofinal = fim->getAno();
+    int iniciomes = inicio->getMes();
+    int mesfinal = fim->getMes();
 
    
-    if (anoInicio > anoFim || (anoInicio == anoFim && mesInicio > mesFim)){
-        throw new invalid_argument("Data de inicio posterior à data de fim.");
+    if (inicioano > anofinal){
+    throw new invalid_argument("eu nao sei oq por ainda");
+}
+
+    if (inicioano == anofinal){
+        if (iniciomes > mesfinal){
+        throw new invalid_argument("eu nao sei oq por ainda");
     }
+}
 }
 
 Bolsa::~Bolsa() {
@@ -48,7 +54,7 @@ double Bolsa::getValorUSP() {
 
 void Bolsa::setValorUSP(double valor) {
     if (valor < 0) {
-        throw new invalid_argument("Valor USP não pode ser negativo.");
+        throw new invalid_argument("n sei oq por ainda");
     }
     valorUSP = valor;
 }
