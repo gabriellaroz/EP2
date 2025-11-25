@@ -23,54 +23,59 @@ Data* BolsaPibic::getDataEntregaRelatorioParcial() {
     return dataRelatorio;
 }
 
-Professor* BolsaPibic::getOrientador() {
+Professor* BolsaPibic::getOrientador(){
     return orientador;
 }
 
-
- //VOU ARRUMAR ESSA LOGICA PRA ENTENDER 
-double BolsaPibic::getValor(Data* d) {
-
-    if (d == nullptr)
+double BolsaPibic::getValor(Data* d){ // logica mais punk
+    
+    if (d == nullptr) // se não passou data, retorna 0, não recebe nada
         return 0;
 
-    Data* ini = getInicio();
-    Data* fim = getFim();
 
-    int iniMes = ini->getMes();
-    int iniAno = ini->getAno();
+    Data* inicial = getInicio(); // pega o inicio da bolsa
+    Data* fim = getFim(); // pega o fim da bolsa
 
-    int fimMes = fim->getMes();
-    int fimAno = fim->getAno();
-
-    int dMes = d->getMes();
+    int dMes = d->getMes(); // extrai o mes e ano da data pedida
     int dAno = d->getAno();
 
-    // Fora do período
-    bool antes = (dAno < iniAno) || (dAno == iniAno && dMes < iniMes);
-    bool depois = (dAno > fimAno) || (dAno == fimAno && dMes > fimMes);
+    int iMes = inicial->getMes(); // extrai o mes o ano do inicio
+    int iAno = inicial->getAno();
 
-    if (antes || depois)
+    int fMes = fim->getMes(); // extrai o mes e ano do fim
+    int fAno = fim->getAno();
+
+
+    bool antes = (dAno < iAno) || (dAno == iAno && dMes < iMes); // verifica se a data é antes do inicio
+    bool depois = (dAno > fAno) || (dAno == fAno && dMes > fMes); // verifica se a data é depois do fim
+
+    if (antes || depois) // se estiver fora do periodo, nao recebe bolsa
         return 0;
 
-    // Mês relativo (0 = mês do início)
-    int mesesD = (dAno - iniAno) * 12 + (dMes - iniMes);
 
-    // Primeiros 6 meses → recebe bolsa normal
-    if (mesesD < 6)
+    int md = 0; // aqui calcula quantos meses passaram desde o inicio
+    md += (dAno - iAno) * 12; // soma meses referentes a diferença de anos
+    md += (dMes - iMes); // soma diferença dos meses
+
+
+    if (md < 6) // se ainda esta nos primeiro meses, recebe!
         return getValorUSP();
 
-    // Depois do sexto mês → depende do relatório
-    if (dataRelatorio == nullptr)
+    if (dataRelatorio == nullptr) //se apos 6 meses so recebe se tiver relatorio
         return 0;
 
-    int relMes = dataRelatorio->getMes();
-    int relAno = dataRelatorio->getAno();
-    int mesesEntrega = (relAno - iniAno) * 12 + (relMes - iniMes);
+    // apega mes e ano do relatorio
+    int rMes = dataRelatorio->getMes();
+    int rAno = dataRelatorio->getAno();
 
-    if (mesesD < mesesEntrega)
+    // verifica se a data d é igual ou depois da entrega do relatorio
+    bool aposRel = (dAno > rAno) || (dAno == rAno && dMes >= rMes);
+
+    // se estiver antes, nao recebe
+    if (!aposRel)
         return 0;
 
+    // se passou por tudo, recebe
     return getValorUSP();
 }
 
