@@ -16,11 +16,13 @@ public:
     int getHorasTrabalhadasNoMes(Data* data);
 
     Professor* getResponsavel();
+
+    double getValor(Data* data) = 0;
 private:
     Professor* responsavel;
     Data* fimBolsaPub;
-    int mesesBolsa;
-    int horasTrabalhadas;
+    int mesSelecionado;
+    int meses[11];
 };
 
 #endif
