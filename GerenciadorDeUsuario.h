@@ -2,12 +2,13 @@
 #define GERENCIADOR_DE_USUARIO_H
 #include <list>
 #include "Usuario.h"
+#include <stdexcept>
 
 using namespace std;
 
 class GerenciadorDeUsuario {
 private:
-    Usuario* usuario;
+    list<Usuario*>* usuarios;
 public:
     GerenciadorDeUsuario();
     GerenciadorDeUsuario(list<Usuario*>* usuarios);
