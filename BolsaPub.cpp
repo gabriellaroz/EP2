@@ -41,3 +41,11 @@ double BolsaPub::getValor(Data* data) {
         return valorProporcional;
     }
 }
+
+void BolsaPub::imprimir() {
+    cout << "(PUB) " 
+        << getInicio()->getMes() << "/" << getInicio()->getAno() 
+        << " a " 
+        << getFim()->getMes() << "/" << getFim()->getAno() 
+        << " - Responsavel " << getResponsavel() << endl;
+}

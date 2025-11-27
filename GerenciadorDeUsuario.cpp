@@ -12,7 +12,7 @@ GerenciadorDeUsuario::~GerenciadorDeUsuario() {  //apaga cada item da lista e dp
     list<Usuario*>::iterator i = usuarios->begin();
 
     while(i != usuarios->end()) {
-        usuarios->pop_back();
+        delete *i;
         i++;
     }
 

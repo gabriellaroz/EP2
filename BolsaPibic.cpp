@@ -89,6 +89,7 @@ void BolsaPibic::imprimir() {
          << " a "
          << fim->getMes() << "/" << fim->getAno()
          << " - Orientador: "
-         << orientador->getNome();
+         << orientador->getNome()
+         << endl;
 }
 

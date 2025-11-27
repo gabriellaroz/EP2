@@ -18,9 +18,11 @@ public:
     Professor* getResponsavel();
 
     double getValor(Data* data) = 0;
+
+    void imprimir();
+    
 private:
     Professor* responsavel;
-    Data* fimBolsaPub;
     int mesSelecionado;
     int meses[11];
 };
