@@ -15,12 +15,12 @@ void menu() {
     int nusp, nuspBolsa, tipoBolsa, mesInicio, anoInicio, mesFim, anoFim;
     string nome, unidade, disciplina;
 
-    PersistenciaDeUsuario* carregarSalvos = new PersistenciaDeUsuario();
+    PersistenciaDeUsuario* carregarSalvar = new PersistenciaDeUsuario();
 
     GerenciadorDeUsuario* gerenciador = new GerenciadorDeUsuario();
     list<Usuario*>* listaGerenciador = gerenciador->getUsuarios();
 
-    list<Usuario*>* listaCarregada = carregarSalvos->carregar("professores.txt", "alunos.txt");
+    list<Usuario*>* listaCarregada = carregarSalvar->carregar("professores.txt", "alunos.txt");
 
     list<Usuario*>::iterator i = listaCarregada->begin();
 
@@ -182,6 +182,16 @@ void menu() {
                 double valor = ehAluno->getValor(new Data(mesInicio, anoInicio));
 
                 cout << "Valor recebido: R$" << valor << endl;
+            }
+        } else if (opcao == 0) {
+            string salvar;
+
+            cout << "Deseja salvar: ";
+            cin >> salvar;
+
+            if(salvar == "s") {
+                carregarSalvar->salvar("professores.txt", "alunos.txt", listaGerenciador);
+                cout << listaGerenciador->size() << " usuarios salvos" << endl;
             }
         }
     }    
