@@ -17,7 +17,7 @@ public:
 
     Professor* getResponsavel();
 
-    double getValor(Data* data) = 0;
+    double getValor(Data* data);
 
     void imprimir();
     
