@@ -183,7 +183,9 @@ void menu() {
 
                 cout << "Valor recebido: R$" << valor << endl;
             }
-        } else if (opcao == 0) {
+        }
+        
+        if (opcao == 0) {
             string salvar;
 
             cout << "Deseja salvar: ";
