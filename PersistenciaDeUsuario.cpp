@@ -8,10 +8,6 @@ list<Usuario*>* PersistenciaDeUsuario::carregar(string arquivoProfessor, string 
     ifstream input;
     input.open(arquivoProfessor);
 
-    if(input.fail()) {
-        throw new logic_error("Arquivo nao encontrado");
-    }
-
     int nusp;
     string nome, departamento;
 

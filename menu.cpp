@@ -6,6 +6,7 @@
 #include "BolsaPeeg.h"
 #include "BolsaPub.h"
 #include "BolsaPibic.h"
+#include "PersistenciaDeUsuario.h"
 
 using namespace std;
 
@@ -14,8 +15,23 @@ void menu() {
     int nusp, nuspBolsa, tipoBolsa, mesInicio, anoInicio, mesFim, anoFim;
     string nome, unidade, disciplina;
 
+    PersistenciaDeUsuario* carregarSalvos = new PersistenciaDeUsuario();
+
     GerenciadorDeUsuario* gerenciador = new GerenciadorDeUsuario();
     list<Usuario*>* listaGerenciador = gerenciador->getUsuarios();
+
+    list<Usuario*>* listaCarregada = carregarSalvos->carregar("professores.txt", "alunos.txt");
+
+    list<Usuario*>::iterator i = listaCarregada->begin();
+
+    while(i != listaCarregada->end()) {
+        gerenciador->adicionar((*i));
+        i++;
+    }
+
+    if(listaGerenciador->size() != 0) {
+        cout << listaGerenciador->size() << " usuarios carregados" << endl;
+    }
 
     while(opcao != 0) {
         cout << "Gestao de bolsas USP" << endl
