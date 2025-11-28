@@ -155,9 +155,33 @@ void menu() {
             cin >> nusp;
 
             Usuario* consulta = gerenciador->getUsuario(nusp);
+            Professor* ehProfessor = dynamic_cast<Professor*>(consulta);
+            Aluno* ehAluno = dynamic_cast<Aluno*>(consulta);
 
             if(consulta == nullptr) {
                 cout << "Usuario nao encontrado" << endl;
+            } else if(ehProfessor != nullptr) {
+                ehProfessor->imprimir();
+            } else {
+                ehAluno->imprimir();
+            }
+    
+        } else if (opcao == 5) {
+            cout << "Digite o NUSP do aluno: ";
+            cin >> nusp;
+
+            Usuario* alunoConsultaValor = gerenciador->getUsuario(nusp);
+
+            if(alunoConsultaValor == nullptr) {
+                cout << "Aluno inexistente" << endl;
+            } else {
+                cout << "Digite o mes e o ano para consulta: ";
+                cin >> mesInicio >> anoInicio; //data que deseja ser consultado o valor
+
+                Aluno* ehAluno = dynamic_cast<Aluno*>(alunoConsultaValor);
+                double valor = ehAluno->getValor(new Data(mesInicio, anoInicio));
+
+                cout << "Valor recebido: R$" << valor << endl;
             }
         }
     }    
