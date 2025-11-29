@@ -3,7 +3,8 @@
 #include "Data.h"
 #include <stdexcept>
 
-BolsaPub::BolsaPub(Data* inicio, Professor* responsavel) : responsavel(responsavel), Bolsa(inicio, new Data(inicio, 11)) {
+BolsaPub::BolsaPub(Data* inicio, Professor* responsavel)
+    : responsavel(responsavel), Bolsa(inicio, new Data(inicio, 11)) {
     for(int i = 0; i < 12; i++) {
         meses[i] = 0;
     }
@@ -43,9 +44,9 @@ double BolsaPub::getValor(Data* data) {
 }
 
 void BolsaPub::imprimir() {
-    cout << "(PUB) " 
-        << getInicio()->getMes() << "/" << getInicio()->getAno() 
-        << " a " 
-        << getFim()->getMes() << "/" << getFim()->getAno() 
-        << " - Responsavel " << getResponsavel() << endl;
+    cout << "(PUB) "
+        << getInicio()->getMes() << "/" << getInicio()->getAno()
+        << " a "
+        << getFim()->getMes() << "/" << getFim()->getAno()
+        << " - Responsavel: " << getResponsavel()->getNome() << endl;
 }

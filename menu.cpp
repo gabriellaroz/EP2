@@ -16,17 +16,15 @@ void menu() {
     string nome, unidade, disciplina;
 
     PersistenciaDeUsuario* carregarSalvar = new PersistenciaDeUsuario();
-
     GerenciadorDeUsuario* gerenciador = new GerenciadorDeUsuario();
     list<Usuario*>* listaGerenciador = gerenciador->getUsuarios();
 
     list<Usuario*>* listaCarregada = carregarSalvar->carregar("professores.txt", "alunos.txt");
 
-    list<Usuario*>::iterator i = listaCarregada->begin();
-
-    while(i != listaCarregada->end()) {
-        gerenciador->adicionar((*i));
-        i++;
+    list<Usuario*>::iterator it = listaCarregada->begin();
+    while(it != listaCarregada->end()) {
+        gerenciador->adicionar(*it);
+        it++;
     }
 
     if(listaGerenciador->size() != 0) {
@@ -45,6 +43,7 @@ void menu() {
         cin >> opcao;
 
         if(opcao == 1) {
+
             cout << "Cadastro de Aluno" << endl
                 << "Digite o NUSP: ";
             cin >> nusp;
@@ -55,7 +54,10 @@ void menu() {
             gerenciador->adicionar(aluno);
 
             cout << "Aluno adicionado com sucesso" << endl;
-        } else if (opcao == 2) {
+        }
+
+        else if (opcao == 2) {
+
             cout << "Cadastro de Professor" << endl
                 << "Digite o NUSP: ";
             cin >> nusp;
@@ -68,25 +70,30 @@ void menu() {
             gerenciador->adicionar(professor);
 
             cout << "Professor adicionado com sucesso" << endl;
-        } else if (opcao == 3) {
-            
+        }
+
+        else if (opcao == 3) {
+
             cout << "Cadastro de Bolsa" << endl
                 << "Alunos" << endl;
             
-            list<Usuario*>::iterator i = listaGerenciador->begin();
-
-            while(i != listaGerenciador->end()) {
-                Aluno* ehAluno = dynamic_cast<Aluno*>((*i));
+            list<Usuario*>::iterator ia = listaGerenciador->begin();
+            while(ia != listaGerenciador->end()) {
+                Aluno* ehAluno = dynamic_cast<Aluno*>(*ia);
                 if(ehAluno != nullptr) {
-                    cout << (*i)->getNusp() << " - " << (*i)->getNome() << endl;
+                    cout << ehAluno->getNusp() << " - " << ehAluno->getNome() << endl;
                 }
-                i++;
+                ia++;
             }
 
             cout << "Digite o NUSP do aluno: ";
             cin >> nuspBolsa;
 
-            gerenciador->getUsuario(nuspBolsa);
+            Usuario* usuarioBolsa = gerenciador->getUsuario(nuspBolsa);
+            if(usuarioBolsa == nullptr || dynamic_cast<Aluno*>(usuarioBolsa) == nullptr) {
+                cout << "Aluno inexistente" << endl;
+                continue;
+            }
 
             cout << "Tipo da bolsa" << endl
                 << "1) PEEG" << endl
@@ -96,6 +103,7 @@ void menu() {
             cin >> tipoBolsa;
 
             if(tipoBolsa == 1) {
+
                 cout << "Digite o mes e ano de inicio: ";
                 cin >> mesInicio >> anoInicio;
                 cout << "Digite o mes e ano de fim: ";
@@ -103,87 +111,102 @@ void menu() {
                 cout << "Digite o codigo da disciplina: ";
                 cin >> disciplina;
 
-                BolsaPeeg* peeg = new BolsaPeeg(new Data(mesInicio, anoInicio), new Data(mesFim, anoFim), disciplina);
-                Usuario* usuario = gerenciador->getUsuario(nuspBolsa);
-                Aluno* alunoPeeg = dynamic_cast<Aluno*>(usuario);
+                BolsaPeeg* peeg = new BolsaPeeg(
+                    new Data(mesInicio, anoInicio),
+                    new Data(mesFim, anoFim),
+                    disciplina
+                );
+
+                Aluno* alunoPeeg = dynamic_cast<Aluno*>(usuarioBolsa);
                 alunoPeeg->adicionar(peeg);
 
                 cout << "Bolsa cadastrada com sucesso" << endl;
-            } else {
+            }
+
+            else {
+
                 cout << "Digite o mes e ano de inicio: ";
                 cin >> mesInicio >> anoInicio;
-                cout << "Professores" << endl;
 
                 Data* inicio = new Data(mesInicio, anoInicio);
 
-                list<Usuario*>::iterator i = listaGerenciador->begin();
+                cout << "Professores" << endl;
 
-                while(i != listaGerenciador->end()) {
-                    Professor* professor = dynamic_cast<Professor*>((*i));
+                list<Usuario*>::iterator ip = listaGerenciador->begin();
+                while(ip != listaGerenciador->end()) {
+                    Professor* professor = dynamic_cast<Professor*>(*ip);
                     if(professor != nullptr) {
-                        cout << professor->getNome() << " - " << professor->getNome() << " - " << professor->getUnidade() << endl;
+                        cout << professor->getNusp() << " - "
+                             << professor->getNome() << " - "
+                             << professor->getUnidade() << endl;
                     }
-                i++;
+                    ip++;
                 }
 
                 cout << "Digite o NUSP do professor: ";
                 cin >> nusp;
 
-                Usuario* profBolsas = gerenciador->getUsuario(nusp);
-                Professor* ehProfessor = dynamic_cast<Professor*>(profBolsas);
+                Usuario* responsavel = gerenciador->getUsuario(nusp);
+                Professor* ehProfessor = dynamic_cast<Professor*>(responsavel);
 
-                if(profBolsas != nullptr) {
-                    Usuario* usuario = gerenciador->getUsuario(nuspBolsa);
-                    Aluno* alunoPubPibic = dynamic_cast<Aluno*>(usuario);
+                if(ehProfessor == nullptr) {
+                    cout << "Professor inexistente" << endl;
+                } 
+                else {
+                    Aluno* aluno = dynamic_cast<Aluno*>(usuarioBolsa);
+
                     if(tipoBolsa == 2) {
                         BolsaPub* pub = new BolsaPub(inicio, ehProfessor);
-                        alunoPubPibic->adicionar(pub);
-
+                        aluno->adicionar(pub);
                     } else {
                         BolsaPibic* pibic = new BolsaPibic(inicio, ehProfessor);
-                        alunoPubPibic->adicionar(pibic);
+                        aluno->adicionar(pibic);
                     }
 
                     cout << "Bolsa cadastrada com sucesso" << endl;
-                } else {
-                    cout << "Professor inexistente" << endl;
                 }
             }
-        } else if (opcao == 4) {
+        }
+
+        else if (opcao == 4) {
+
             cout << "Consulta de usuario" << endl
                 << "Digite o NUSP: ";
             cin >> nusp;
 
             Usuario* consulta = gerenciador->getUsuario(nusp);
-            Professor* ehProfessor = dynamic_cast<Professor*>(consulta);
-            Aluno* ehAluno = dynamic_cast<Aluno*>(consulta);
 
             if(consulta == nullptr) {
                 cout << "Usuario nao encontrado" << endl;
-            } else if(ehProfessor != nullptr) {
-                ehProfessor->imprimir();
+            } else if(dynamic_cast<Professor*>(consulta) != nullptr) {
+                dynamic_cast<Professor*>(consulta)->imprimir();
             } else {
-                ehAluno->imprimir();
+                dynamic_cast<Aluno*>(consulta)->imprimir();
             }
-    
-        } else if (opcao == 5) {
+        }
+
+        else if (opcao == 5) {
+
             cout << "Digite o NUSP do aluno: ";
             cin >> nusp;
 
-            Usuario* alunoConsultaValor = gerenciador->getUsuario(nusp);
+            Usuario* alunoConsulta = gerenciador->getUsuario(nusp);
 
-            if(alunoConsultaValor == nullptr) {
+            if(alunoConsulta == nullptr) {
                 cout << "Aluno inexistente" << endl;
             } else {
                 cout << "Digite o mes e o ano para consulta: ";
-                cin >> mesInicio >> anoInicio; //data que deseja ser consultado o valor
+                cin >> mesInicio >> anoInicio;
 
-                Aluno* ehAluno = dynamic_cast<Aluno*>(alunoConsultaValor);
-                double valor = ehAluno->getValor(new Data(mesInicio, anoInicio));
+                Aluno* aluno = dynamic_cast<Aluno*>(alunoConsulta);
+                double valor = aluno->getValor(new Data(mesInicio, anoInicio));
 
                 cout << "Valor recebido: R$" << valor << endl;
             }
-        } else if (opcao == 0) {
+        }
+
+        else if (opcao == 0) {
+
             string salvar;
 
             cout << "Deseja salvar: ";
@@ -194,5 +217,5 @@ void menu() {
                 cout << listaGerenciador->size() << " usuarios salvos" << endl;
             }
         }
-    }    
+    }
 }

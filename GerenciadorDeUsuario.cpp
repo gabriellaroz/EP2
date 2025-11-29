@@ -1,22 +1,24 @@
 #include "GerenciadorDeUsuario.h"
 
-GerenciadorDeUsuario::GerenciadorDeUsuario() {  //cria uma lista de usuarios
-    list<Usuario*>* usuarios = new list<Usuario*>();
+GerenciadorDeUsuario::GerenciadorDeUsuario() {
+    
+    this->usuarios = new list<Usuario*>();
 }
 
-GerenciadorDeUsuario::GerenciadorDeUsuario(list<Usuario*>* usuarios) {  //recebe lista de usuarios existente
+GerenciadorDeUsuario::GerenciadorDeUsuario(list<Usuario*>* usuarios) {
     this->usuarios = usuarios;
 }
 
-GerenciadorDeUsuario::~GerenciadorDeUsuario() {  //apaga cada item da lista e dps a lista
-    list<Usuario*>::iterator i = usuarios->begin();
-
-    while(i != usuarios->end()) {
-        delete *i;
-        i++;
+GerenciadorDeUsuario::~GerenciadorDeUsuario() {
+    if (usuarios != nullptr) {
+        list<Usuario*>::iterator i = usuarios->begin();
+        while(i != usuarios->end()) {
+            delete *i;
+            i++;
+        }
+        delete usuarios;
+        usuarios = nullptr;
     }
-
-    delete usuarios;
 }
 
 void GerenciadorDeUsuario::adicionar(Usuario* u) {
@@ -30,7 +32,6 @@ void GerenciadorDeUsuario::adicionar(Usuario* u) {
     }
 
     usuarios->push_back(u);
-
 }
 
 list<Usuario*>* GerenciadorDeUsuario::getUsuarios() {
@@ -47,5 +48,5 @@ Usuario* GerenciadorDeUsuario::getUsuario(int nusp) {
         i++;
     }
 
-    return nullptr;  //usuario nao encontrado, retorno nulo
+    return nullptr;
 }

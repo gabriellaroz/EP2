@@ -1,14 +1,9 @@
-#include <iostream>
-#include <fstream>
-#include <list>
-#include <stdexcept>
-
-#include "Usuario.h"
-#include "Professor.h"
-#include "Aluno.h"
-
 #ifndef PERSISTENCIA_DE_USUARIO_H
 #define PERSISTENCIA_DE_USUARIO_H
+
+#include <list>
+#include <string>
+#include "Usuario.h"
 
 using namespace std;
 

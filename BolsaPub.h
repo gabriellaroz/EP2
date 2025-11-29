@@ -24,7 +24,7 @@ public:
 private:
     Professor* responsavel;
     int mesSelecionado;
-    int meses[11];
+    int meses[12];
 };
 
 #endif

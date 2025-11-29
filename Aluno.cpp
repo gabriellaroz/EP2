@@ -41,12 +41,13 @@ double Aluno::getValor(Data* data) {
 
     while(i != bolsas->end()) {
         if(Data::estaDentroDoPeriodo((*i)->getInicio(), (*i)->getFim(), data)) {
-            return (*i)->getValorUSP();
+            return (*i)->getValor(data);
         }
         i++;
     }
     return 0;
 }
+
 
 void Aluno::imprimir() {
     cout << "Aluno: " << getNome() << endl;
