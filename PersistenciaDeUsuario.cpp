@@ -7,44 +7,77 @@ PersistenciaDeUsuario::~PersistenciaDeUsuario(){}
 list<Usuario*>* PersistenciaDeUsuario::carregar(string arquivoProfessor, string arquivoAluno) {
     ifstream input;
     input.open(arquivoProfessor);
+    cout << "abrindo arquivo profs" << endl;
 
-    int nusp;
-    string nome, departamento;
+    int nuspProf, nuspAluno; 
+    string nomeProf, nomeAluno, departamento;
 
-    while(input) {    
-        input >> nusp;
-        input >> nome;
-        input >> departamento;
-        usuarios->push_back(new Professor(nusp, nome, departamento));
+    // Lendo professores
+    while (input >> nuspProf >> nomeProf >> departamento) {
+        usuarios->push_back(new Professor(nuspProf, nomeProf, departamento));
+        cout << "lendo" << endl;
     }
-
-    if(!input.eof()) {
-        throw new logic_error("Erro de leitura");
-    }
-
+    cout << "saiu do while" << endl;
     input.close();
+    cout << "fechou profs" << endl;
 
+    // Lendo alunos
     input.open(arquivoAluno);
+    cout << "abrindo alunos" << endl;
 
-    if(input.fail()) {
-        throw new logic_error("Aequivo nao encontrado");
+    if(input.eof()) {
+        throw new logic_error("Formato errado");
     }
 
-    while(input) {
-        input >> nusp;
-        input >> nome;
-        usuarios->push_back(new Aluno(nusp, nome));
-    }
-
-    if(!input.eof()) {
-        throw new logic_error("Erro de leitura");
+    while (input >> nuspAluno >> nomeAluno) {
+        usuarios->push_back(new Aluno(nuspAluno, nomeAluno));
+        cout << "lendo alunos" << endl;
     }
 
     input.close();
-
     return usuarios;
-
 }
+
+   // ifstream input;
+   // input.open(arquivoProfessor);
+
+   // int nusp;
+   // string nome, departamento;
+
+   // while(input >> nusp >> nome >> departamento) {    
+      //  input >> nusp;
+       // input >> nome;
+       // input >> departamento;
+   //     usuarios->push_back(new Professor(nusp, nome, departamento));
+    //}
+
+    //if(!input.eof()) {
+    //    throw new logic_error("Erro de leitura");
+    //}
+
+    //input.close();
+
+    //input.open(arquivoAluno);
+
+    //if(input.fail()) {
+    //    throw new logic_error("Aequivo nao encontrado");
+    //}
+
+    //while(input >> nusp >> nome) {
+       // input >> nusp;
+       // input >> nome;
+    //    usuarios->push_back(new Aluno(nusp, nome));
+    //}
+
+    //if(!input.eof()) {
+    //    throw new logic_error("Erro de leitura");
+    //}/
+
+    //input.close();
+
+    //return usuarios;
+
+//}
 
 void PersistenciaDeUsuario::salvar(string arquivoProfessor, string arquivoAluno, list<Usuario*>* usuarios) {
     ofstream output;

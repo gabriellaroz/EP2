@@ -15,22 +15,32 @@ void menu() {
     int nusp, nuspBolsa, tipoBolsa, mesInicio, anoInicio, mesFim, anoFim;
     string nome, unidade, disciplina;
 
+    cout << "!";
+
     PersistenciaDeUsuario* carregarSalvar = new PersistenciaDeUsuario();
 
     GerenciadorDeUsuario* gerenciador = new GerenciadorDeUsuario();
     list<Usuario*>* listaGerenciador = gerenciador->getUsuarios();
 
+    cout << "!";
+
     list<Usuario*>* listaCarregada = carregarSalvar->carregar("professores.txt", "alunos.txt");
 
-    list<Usuario*>::iterator i = listaCarregada->begin();
+    cout << "!";
 
-    while(i != listaCarregada->end()) {
-        gerenciador->adicionar((*i));
-        i++;
-    }
+    if(listaCarregada != nullptr) {
+        list<Usuario*>::iterator i = listaCarregada->begin();   
 
-    if(listaGerenciador->size() != 0) {
-        cout << listaGerenciador->size() << " usuarios carregados" << endl;
+        while(i != listaCarregada->end()) {
+            gerenciador->adicionar((*i));
+            i++;
+        }
+
+        cout << "!";
+
+        if(listaGerenciador->size() != 0) {
+            cout << listaGerenciador->size() << " usuarios carregados" << endl;
+        }
     }
 
     while(opcao != 0) {
@@ -184,7 +194,7 @@ void menu() {
                 cout << "Valor recebido: R$" << valor << endl;
             }
         }
-        
+
         if (opcao == 0) {
             string salvar;
 
